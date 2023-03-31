@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Docker') {
             steps {
-                sh 'echo "Some docker"'
+                sh 'docker -v'
             }
         }
     }
