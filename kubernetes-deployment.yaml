@@ -16,7 +16,7 @@ spec:
       - containerPort: 80
 ---
 apiVersion: v1
-kind: blazor-app-service
+kind: Service
 metadata:
   name: blazor-app
 spec:
