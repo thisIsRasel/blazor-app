@@ -1,9 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: blazor-app
-  labels:
-    name: blazor-app
+  name: blazor-app-pod
 spec:
   containers:
   - name: blazor-app
@@ -20,9 +18,9 @@ kind: Service
 metadata:
   name: blazor-app-service
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
-    app: blazor-app
+    app: blazor-app-pod
   ports:
   - name: http
     port: 80
