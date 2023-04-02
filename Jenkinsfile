@@ -7,8 +7,10 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                def minikubeEnv = bat(returnStdout: true, script: "minikube docker-env --shell cmd")
-                bat(minikubeEnv + " & docker build -t thisisrasel/my-blazor-app:latest .")
+                script {
+                    def minikubeEnv = bat(returnStdout: true, script: "minikube docker-env --shell cmd")
+                    bat(minikubeEnv + " & docker build -t thisisrasel/my-blazor-app:latest .")
+                }
             }
         }
         stage('Build & Push Docker Image') {
