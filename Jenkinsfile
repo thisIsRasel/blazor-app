@@ -2,22 +2,16 @@ pipeline {
     agent any
     
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('thisisrasel-dockerhub')
+        DOCKER_REGISTRY = "thisisrasel"
     }
     stages {
-        stage('Build') {
+        stage('Build & Push Docker Image') {
             steps {
-                bat 'docker build -t thisisrasel/my-blazor-app:latest .'
-            }
-        }
-        stage('Login') {
-            steps {
-                bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-            }
-        }
-        stage('Push') {
-            steps {
-                bar 'docker push thisisrasel/my-blazor-app:latest'
+                withCredentials([usernamePassword(credentialsId: 'thisisrasel-dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    bat "docker login -u $DOCKER_USER -p $DOCKER_PASS $DOCKER_REGISTRY"
+                    bat "docker build -t $DOCKER_REGISTRY/my-blazor-app:latest ."
+                    bat "docker push $DOCKER_REGISTRY/my-blazor-app:latest"
+                }
             }
         }
     }
