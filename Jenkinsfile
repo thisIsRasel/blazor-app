@@ -7,13 +7,10 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                script {
-                    def minikubeEnv = bat(returnStdout: true, script: "minikube docker-env --shell cmd")
-                    bat(minikubeEnv + " & docker build -t thisisrasel/my-blazor-app:latest .")
-                }
+                bat "docker build -t thisisrasel/my-blazor-app:latest ."
             }
         }
-        stage('Build & Push Docker Image') {
+        stage('Push Docker Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'thisisrasel-dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     bat "docker login -u $DOCKER_USER -p $DOCKER_PASS"
