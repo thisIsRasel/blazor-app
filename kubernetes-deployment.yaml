@@ -20,8 +20,9 @@ kind: Service
 metadata:
   name: blazor-app
 spec:
+  type: LoadBalancer
   selector:
     app: blazor-app
   ports:
-  - port: 80
-    targetPort: 4000
+  - port: 4000
+    targetPort: 80
