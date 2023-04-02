@@ -7,17 +7,17 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t thisisrasel/my-blazor-app:latest .'
+                bat 'docker build -t thisisrasel/my-blazor-app:latest .'
             }
         }
         stage('Login') {
             steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
         stage('Push') {
             steps {
-                sh 'docker push thisisrasel/my-blazor-app:latest'
+                bar 'docker push thisisrasel/my-blazor-app:latest'
             }
         }
     }
