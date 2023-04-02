@@ -1,15 +1,28 @@
 pipeline {
     agent any
-
+    
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('thisisrasel-dockerhub')
+    }
     stages {
-        stage('Hello') {
+        stage('Build') {
             steps {
-                echo 'Hello World'
+                sh 'docker build -t thisisrasel/my-blazor-app:latest .'
             }
         }
-        stage('Docker') {
+        stage('Login') {
             steps {
-                sh 'docker -v'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        stage('Push') {
+            steps {
+                sh 'docker push thisisrasel/my-blazor-app:latest'
+            }
+        }
+        post {
+            always {
+                sh 'docker logout'
             }
         }
     }
