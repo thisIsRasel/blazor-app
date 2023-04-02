@@ -18,11 +18,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: blazor-app
+  name: blazor-app-service
 spec:
   type: LoadBalancer
   selector:
     app: blazor-app
   ports:
-  - port: 4000
+  - name: http
+    port: 80
     targetPort: 80
