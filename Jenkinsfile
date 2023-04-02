@@ -20,10 +20,10 @@ pipeline {
                 sh 'docker push thisisrasel/my-blazor-app:latest'
             }
         }
-        post {
-            always {
-                sh 'docker logout'
-            }
+    }
+    post {
+        always {
+            sh 'docker logout'
         }
     }
 }
